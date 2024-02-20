@@ -17,7 +17,7 @@ type (
 		Enabled       string `json:"enabled"`
 		Email         string `json:"email"`
 		EmailVerified string `json:"emailVerified"`
-		Attributes    struct {
+		attributes    struct {
 			AccountId string `json:"accountId"`
 		}
 	}
@@ -31,7 +31,7 @@ func Create(token *token.Token) error {
 		Enabled:       "true",
 		Email:         "test" + "@example.com",
 		EmailVerified: "true",
-		Attributes: struct {
+		attributes: struct {
 			AccountId string `json:"accountId"`
 		}{
 			AccountId: uuid.NewString(),
