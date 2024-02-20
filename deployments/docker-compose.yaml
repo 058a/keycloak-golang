@@ -1,0 +1,51 @@
+version: "2"
+services:
+  keycloak-client:
+    container_name: keycloak-client
+    image: golang:1.22.0-alpine3.19
+    tty: true
+    ports:
+      - 1323:1323
+    working_dir: /usr/src/app/cmd/main
+    command:
+      - /bin/sh
+      - -c 
+      - |
+        go install github.com/cosmtrek/air@latest
+        air
+    volumes:
+      - ./../:/usr/src/app
+    environment:
+      SERVICE_URL: "http://localhost:1323"
+      DB_DRIVER: "postgres"
+      DB_DSN: "host=openapi-db port=5432 user=user password=password dbname=openapi sslmode=disable"
+
+  keycloak-database:
+    container_name: keycloak-database
+    image: postgres:16.1
+    ports:
+      - 5432:5432
+    restart: always
+    environment:
+      POSTGRES_USER: bn_keycloak
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: bitnami_keycloak
+
+  keycloak-provider:
+    container_name: keycloak-provider
+    image: bitnami/keycloak:23
+    ports:
+      - 80:80
+    environment:
+      KEYCLOAK_ADMIN_USER: user
+      KEYCLOAK_ADMIN_PASSWORD: bitnami
+      KEYCLOAK_DATABASE_HOST: keycloak-database
+      KEYCLOAK_DATABASE_PORT: 5432
+      KEYCLOAK_DATABASE_NAME: bitnami_keycloak
+      KEYCLOAK_DATABASE_USER: bn_keycloak
+      KEYCLOAK_DATABASE_PASSWORD: password
+      KEYCLOAK_EXTRA_ARGS: --import-realm
+    volumes:
+      - ./keycloak/:/opt/bitnami/keycloak/data/import
+    depends_on:
+      - keycloak-database
