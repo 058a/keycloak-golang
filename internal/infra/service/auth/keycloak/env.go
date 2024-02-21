@@ -1,6 +1,7 @@
 package keycloak
 
 import (
+	"errors"
 	"os"
 )
 
@@ -29,7 +30,7 @@ func GetRelmName() string {
 }
 
 func GetHost() string {
-	value := os.Getenv("IAM_SERVICE_HOST")
+	value := os.Getenv("IAM_HOST")
 	if value == "" {
 		value = "http://localhost"
 	}
@@ -44,10 +45,20 @@ func GetClientId() string {
 	return value
 }
 
-func GetClientSecret() string {
-	value := os.Getenv("IAM_CLIENT_SECRET")
+func GetClientSecret() (string, error) {
+	value := os.Getenv("IAM_CLIENT_CLIENT_SECRET")
 	if value == "" {
-		value = "sKiC4rmyogJ7nrqlzlTd3AKNsTfsMpeA"
+		return "", errors.New("IAM_CLIENT_CLIENT_SECRET is not set")
 	}
-	return value
+	return value, nil
+}
+
+func SetClientSecret(clientSecret string) error {
+	err := os.Setenv("IAM_CLIENT_CLIENT_SECRET", clientSecret)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

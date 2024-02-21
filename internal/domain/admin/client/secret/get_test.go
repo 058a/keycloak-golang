@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestRegenerate(t *testing.T) {
+func TestGet(t *testing.T) {
 	// Setup
 	t.Parallel()
 
@@ -37,7 +37,7 @@ func TestRegenerate(t *testing.T) {
 			}
 
 			// When
-			secret, err := secret.Regenerate(token, id)
+			secret, err := secret.Get(token, id)
 
 			// Then
 			if !tt.wantErr {

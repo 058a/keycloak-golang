@@ -28,7 +28,11 @@ func SignIn(username string) (*Token, error) {
 		return nil, err
 	}
 
-	authorization := keycloak.GetClientId() + ":" + keycloak.GetClientSecret()
+	secret, err := keycloak.GetClientSecret()
+	if err != nil {
+		return nil, err
+	}
+	authorization := keycloak.GetClientId() + ":" + secret
 	encodedAuthorization := base64.StdEncoding.EncodeToString([]byte(authorization))
 	req.Header.Add("Authorization", "Basic "+encodedAuthorization)
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
