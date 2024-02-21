@@ -5,8 +5,8 @@ import (
 	"testing"
 )
 
-func TestGet(t *testing.T) {
-	token, err := token.Get()
+func TestSignIn(t *testing.T) {
+	token, err := token.SignIn()
 	if err != nil {
 		t.Error(err)
 	}

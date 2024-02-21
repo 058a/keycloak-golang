@@ -12,7 +12,7 @@ import (
 )
 
 type (
-	body struct {
+	createReqBody struct {
 		Username      string `json:"username"`
 		Enabled       string `json:"enabled"`
 		Email         string `json:"email"`
@@ -26,10 +26,10 @@ type (
 func Create(token *token.Token) error {
 	httpClient := &http.Client{}
 
-	reqBody := body{
+	reqBody := createReqBody{
 		Username:      uuid.NewString(),
 		Enabled:       "true",
-		Email:         "test" + "@example.com",
+		Email:         uuid.NewString() + "@example.com",
 		EmailVerified: "true",
 		attributes: struct {
 			AccountId string `json:"accountId"`

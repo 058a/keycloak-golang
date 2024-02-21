@@ -7,7 +7,7 @@ import (
 )
 
 func TestCreate(t *testing.T) {
-	token, err := token.Get()
+	token, err := token.SignIn()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -15,4 +15,5 @@ func TestCreate(t *testing.T) {
 	if err := user.Create(token); err != nil {
 		t.Error(err)
 	}
+
 }

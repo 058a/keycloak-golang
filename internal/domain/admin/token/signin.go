@@ -15,7 +15,7 @@ type Token struct {
 	RefreshToken string `json:"refresh_token"`
 }
 
-func Get() (*Token, error) {
+func SignIn() (*Token, error) {
 	httpClient := &http.Client{}
 	values := url.Values{}
 	values.Add("client_id", "admin-cli")

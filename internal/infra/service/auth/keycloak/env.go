@@ -35,3 +35,19 @@ func GetHost() string {
 	}
 	return value
 }
+
+func GetClientId() string {
+	value := os.Getenv("IAM_CLIENT_ID")
+	if value == "" {
+		value = "shop"
+	}
+	return value
+}
+
+func GetClientSecret() string {
+	value := os.Getenv("IAM_CLIENT_SECRET")
+	if value == "" {
+		value = "sKiC4rmyogJ7nrqlzlTd3AKNsTfsMpeA"
+	}
+	return value
+}
